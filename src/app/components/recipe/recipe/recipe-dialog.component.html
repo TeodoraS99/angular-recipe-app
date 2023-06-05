@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>Create a new recipe</h2>
+<mat-dialog-content class="mat-typography" (ngSubmit)="onSubmit()">
+  <!-- <div class="flex flex-col items-start"> -->
+  <form
+    [formGroup]="recipeForm"
+    (ngSubmit)="onSubmit()"
+    class="flex flex-col items-start"
+  >
+    <mat-form-field>
+      <mat-label for="recipeTitle">Recipe title</mat-label>
+      <input matInput formControlName="title"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="ingridients">Ingredients (one per line): </mat-label>
+      <textarea matInput formControlName="ingriedents"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="preparation">Preparation: </mat-label>
+      <textarea matInput formControlName="preparation"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="complexity">Complexity:</mat-label>
+      <mat-select formControlName="complexity">
+        <mat-option value="lov">Low</mat-option>
+        <mat-option value="average">Average</mat-option>
+        <mat-option value="medium">Medium</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="preparationTime">Preparation time: </mat-label>
+      <input matInput formControlName="preparationTime" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="bakingTime">Baking time: </mat-label>
+      <input matInput formControlName="bakingTime" />
+    </mat-form-field>
+    <!-- </div> -->
+  </form>
+</mat-dialog-content>
+
+<div mat-dialog-actions>
+  <button mat-button cdkFocusInitial type="submit" (click)="addRecipe()">Submit</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</div>
