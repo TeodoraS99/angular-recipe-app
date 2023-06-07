@@ -1,0 +1,19 @@
+.header-logo {
+  flex: 1;
+}
+
+.header-search {
+  flex: 2;
+}
+
+.header-actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mat-toolbar {
+  height: 10rem; /* Adjust the height as per your requirement */
+
+}
+
