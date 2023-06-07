@@ -74,7 +74,7 @@ export class RecipeDialogComponent implements OnInit {
       if (recipe) {
         alert('Recipe Added Successfully!');
       }
-    });
+    }).catch;
   }
 
   onSubmit() {}

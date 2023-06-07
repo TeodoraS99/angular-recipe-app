@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import {
   Firestore,
   addDoc,
@@ -17,7 +20,13 @@ import { Recipe } from '../types/recipe';
 export class RecipeService {
   public fs!: Firestore;
 
-  constructor() {}
+  recipesRef!: AngularFirestoreCollection<Recipe>;
+
+  constructor(
+    private db: AngularFireDatabase,
+    private firestore: AngularFirestore,
+    private auth: AngularFireAuth
+  ) {}
   //Add new Recipe code here
   addRecipe(recipe: Recipe) {
     recipe.id = doc(collection(this.fs, 'id')).id;
@@ -43,6 +52,4 @@ export class RecipeService {
     let docRef = doc(collection(this.fs, `Recipe'/${recipe.id}`));
     return updateDoc(docRef, recipes);
   }
-
-
 }

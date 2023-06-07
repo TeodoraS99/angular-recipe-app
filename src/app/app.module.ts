@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { CommonModule } from '@angular/common';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore/';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/firestore/';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore/';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -29,10 +29,11 @@ import {
   RecipeDialogComponent,
 } from './components/recipe/recipe/recipe.component';
 
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireModule } from '@angular/fire/compat';
+import { RecipeService } from './services/recipe.service';
 
 @NgModule({
   declarations: [
@@ -49,11 +50,13 @@ import { AngularFireModule } from '@angular/fire/compat';
     RouterModule,
     AppRoutingModule,
 
+    // provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    // provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireDatabaseModule,
-    AngularFireStorageModule,
+    // AngularFireDatabaseModule,
+    // AngularFireStorageModule,
+    // AngularFireAuthModule,
 
     BrowserAnimationsModule,
     MatCheckboxModule,
@@ -70,7 +73,7 @@ import { AngularFireModule } from '@angular/fire/compat';
     MatSelectModule,
     MatSnackBarModule,
   ],
-  providers: [],
+  providers: [RecipeService, AngularFireDatabase, AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
