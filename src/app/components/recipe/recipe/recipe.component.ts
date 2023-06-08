@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Recipe } from 'src/app/types/recipe';
+import { RecipeDialogComponent } from '../../recipe-dialog/recipe-dialog.component';
 
 @Component({
   selector: 'app-recipe',
@@ -11,13 +12,31 @@ import { Recipe } from 'src/app/types/recipe';
 })
 export class RecipeComponent implements OnInit {
   isRecipe = true;
+  editMode = false;
+  recipeForm!: FormGroup;
+  recipeData!: Recipe[];
+  recipe!: Recipe;
+  index!: string;
+  imagePreview!: string;
 
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  constructor(
+    private fb: FormBuilder,
+    private recipeService: RecipeService,
+    public dialog: MatDialog
+  ) {}
+
+  ngOnInit(): void {}
+
+  onLoadRecipeDetail() {
+    if (this.recipe && this.recipe.id) {
+      this.recipeService.getRecipeById(this.recipe.id).subscribe((recipe) => {
+        console.log(recipe);
+      });
+    }
   }
-  constructor(public dialog: MatDialog) {}
+
   openDialog() {
-    let dialogRef: MatDialogRef<any>;
+    let dialogRef: MatDialogRef<RecipeDialogComponent>;
     if (this.isRecipe) {
       dialogRef = this.dialog.open(RecipeDialogComponent, {
         height: '100%',
@@ -28,54 +47,28 @@ export class RecipeComponent implements OnInit {
   }
 }
 
-@Component({
-  selector: 'app-recipe-dialog',
-  templateUrl: './recipe-dialog.component.html',
-})
-export class RecipeDialogComponent implements OnInit {
-  isRecipe = true;
-  recipeForm!: FormGroup;
+// recipes: Recipe[];
+// subscription: Subscription;
 
-  recipeObj: Recipe = {
-    id: '',
-    recipe_title: '',
-    ingriedents: '',
-    preparation: '',
-    complexity: '',
-    preparation_time: '',
-    baking_time: '',
-  };
+// constructor(private recipeService: RecipeService,
+//             private router: Router,
+//             private route: ActivatedRoute) {
+// }
 
-  constructor(private fb: FormBuilder, private recipeService: RecipeService) {
-    this.recipeForm = this.fb.group({
-      title: ['', Validators.required],
-      ingriedents: ['', Validators.required],
-      preparation: ['', Validators.required],
-      complexity: ['', Validators.required],
-      preparationTime: ['', Validators.required],
-      bakingTime: ['', Validators.required],
-    });
-  }
+// ngOnInit() {
+//   this.subscription = this.recipeService.recipesChanged
+//     .subscribe(
+//       (recipes: Recipe[]) => {
+//         this.recipes = recipes;
+//       }
+//     );
+//   this.recipes = this.recipeService.getRecipes();
+// }
 
-  ngOnInit() {}
+// onNewRecipe() {
+//   this.router.navigate(['new'], {relativeTo: this.route});
+// }
 
-  addRecipe() {
-    const { value } = this.recipeForm;
-    console.log(value);
-    (this.recipeObj.id = ''),
-      (this.recipeObj.recipe_title = value.title),
-      (this.recipeObj.ingriedents = value.ingriedents),
-      (this.recipeObj.preparation = value.preparation),
-      (this.recipeObj.complexity = value.complexity),
-      (this.recipeObj.preparation_time = value.preparationTime),
-      (this.recipeObj.baking_time = value.bakingTime);
-
-    this.recipeService.addRecipe(this.recipeObj).then((recipe) => {
-      if (recipe) {
-        alert('Recipe Added Successfully!');
-      }
-    }).catch;
-  }
-
-  onSubmit() {}
-}
+// ngOnDestroy() {
+//   this.subscription.unsubscribe();
+// }

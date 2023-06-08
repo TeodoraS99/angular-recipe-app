@@ -1,55 +1,56 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import {
-  Firestore,
-  addDoc,
-  collection,
-  collectionData,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
+import { Observable, map } from 'rxjs';
 import { Recipe } from '../types/recipe';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
-  public fs!: Firestore;
+  create(recipeObj: Recipe) {
+    throw new Error('Method not implemented.');
+  }
+  // getRecipe() {
+  //   throw new Error('Method not implemented.');
+  // }
+  private dbPath = '/recipe_title';
+  private recipes: Recipe[] = [];
+  recipesRef: AngularFirestoreCollection<Recipe>;
 
-  recipesRef!: AngularFirestoreCollection<Recipe>;
-
-  constructor(
-    private db: AngularFireDatabase,
-    private firestore: AngularFirestore,
-    private auth: AngularFireAuth
-  ) {}
-  //Add new Recipe code here
-  addRecipe(recipe: Recipe) {
-    recipe.id = doc(collection(this.fs, 'id')).id;
-    return addDoc(collection(this.fs, 'Recipe'), recipe);
+  constructor(private db: AngularFirestore) {
+    this.recipesRef = db.collection(this.dbPath);
   }
 
-  //get all recipes from database
-  getRecipes(): Observable<Recipe[]> {
-    let recipesRef = collection(this.fs, 'Recipe');
-    return collectionData(recipesRef, { idField: 'id' }) as Observable<
-      Recipe[]
-    >;
+  getAll(): AngularFirestoreCollection<Recipe> {
+    return this.recipesRef;
   }
 
-  //delete all recipes from database
-  deleteRecipe(recipe: Recipe) {
-    let docRef = doc(collection(this.fs, `Recipe'/${recipe.id}`));
-    return deleteDoc(docRef);
+  getRecipe(): Observable<Recipe[]> {
+    return this.recipesRef.valueChanges();
   }
 
-  //update recipes from database
-  updateRecipe(recipe: Recipe, recipes: any) {
-    let docRef = doc(collection(this.fs, `Recipe'/${recipe.id}`));
-    return updateDoc(docRef, recipes);
+  getRecipeById(id: string): Observable<Recipe | undefined> {
+    return this.recipesRef
+      .valueChanges()
+      .pipe(
+        map((recipes: Recipe[]) =>
+          recipes.find((recipe: Recipe) => recipe.id === id)
+        )
+      );
+  }
+
+  createRecipe(recipe: Recipe): any {
+    return this.recipesRef.add({ ...recipe });
+  }
+
+  updateRecipe(id: string, data: any): Promise<void> {
+    return this.recipesRef.doc(id).update(data);
+  }
+
+  deleteRecipe(id: string): Promise<void> {
+    return this.recipesRef.doc(id).delete();
   }
 }

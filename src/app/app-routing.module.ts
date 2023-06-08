@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {
-  RecipeComponent,
-  RecipeDialogComponent,
-} from './components/recipe/recipe/recipe.component';
+import { RecipeDialogComponent } from './components/recipe-dialog/recipe-dialog.component';
+import { RecipeComponent } from './components/recipe/recipe/recipe.component';
 
 const routes: Routes = [
   {

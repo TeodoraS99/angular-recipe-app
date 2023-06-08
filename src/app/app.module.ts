@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { CommonModule } from '@angular/common';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/firestore/';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore/';
+import {
+  AngularFirestore,
+  AngularFirestoreModule,
+} from '@angular/fire/compat/firestore/';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -24,15 +25,19 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header/header.component';
-import {
-  RecipeComponent,
-  RecipeDialogComponent,
-} from './components/recipe/recipe/recipe.component';
 
-import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireModule } from '@angular/fire/compat';
+import {
+  AngularFireAuth,
+  AngularFireAuthModule,
+} from '@angular/fire/compat/auth';
+import {
+  AngularFireDatabase,
+  AngularFireDatabaseModule,
+} from '@angular/fire/compat/database';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { RecipeDialogComponent } from './components/recipe-dialog/recipe-dialog.component';
+import { RecipeComponent } from './components/recipe/recipe/recipe.component';
 import { RecipeService } from './services/recipe.service';
 
 @NgModule({
@@ -54,9 +59,9 @@ import { RecipeService } from './services/recipe.service';
     // provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    // AngularFireDatabaseModule,
-    // AngularFireStorageModule,
-    // AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
 
     BrowserAnimationsModule,
     MatCheckboxModule,
@@ -73,7 +78,12 @@ import { RecipeService } from './services/recipe.service';
     MatSelectModule,
     MatSnackBarModule,
   ],
-  providers: [RecipeService, AngularFireDatabase, AngularFireAuth, AngularFirestore],
+  providers: [
+    RecipeService,
+    AngularFireDatabase,
+    AngularFireAuth,
+    AngularFirestore,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
