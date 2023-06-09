@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Recipe } from 'src/app/types/recipe';
 import { RecipeDialogComponent } from '../../recipe-dialog/recipe-dialog.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe',
@@ -14,39 +11,23 @@ import { Subscription } from 'rxjs';
 })
 export class RecipeComponent implements OnInit {
   isRecipe = true;
-  editMode = false;
-  recipeForm!: FormGroup;
-  recipeData!: Recipe[];
   data!: Recipe;
-  index!: string;
   imagePreview!: string;
-  // recipes: Recipe[];
-   subscription!: Subscription;
+  recipeList!: Recipe[];
 
   constructor(
-    private fb: FormBuilder,
     private recipeService: RecipeService,
-    public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute
-  )
-  {}
+    private dialog: MatDialog
+  ) {}
 
-  ngOnInit() {
-    // this.subscription = this.recipeService.recipesChanged
-    //   .subscribe(
-    //     (recipes: Recipe[]) => {
-    //       this.recipes
-    //   );
-    // this.recipes = this.recipeService.getRecipe();
-  }
-
-  onLoadRecipeDetail() {
-    if (this.data && this.data.id) {
-      this.recipeService.getRecipeById(this.data.id).subscribe((data) => {
-        console.log(data);
+  ngOnInit(): void {
+    this.recipeService.fetchRecipe().subscribe((recipes) => {
+      this.recipeList = recipes.map((recipeItem) => {
+        const data = recipeItem.payload.doc.data() as Recipe;
+        const id = recipeItem.payload.doc.id;
+        return { id, ...data };
       });
-    }
+    });
   }
 
   openDialog() {
@@ -68,7 +49,7 @@ export class RecipeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((res) => {
-      if (res.recipe_title) {
+      if (res?.recipe_title) {
         this.recipeService
           .createRecipe(res)
           .then((data: any) => console.log(data));
@@ -76,11 +57,25 @@ export class RecipeComponent implements OnInit {
     });
   }
 
-  onNewRecipe() {
-    this.router.navigate(['new'], { relativeTo: this.route });
+  onEdit(item: Recipe) {
+    console.log(item);
+    const dialogRef = this.dialog.open(RecipeDialogComponent, {
+      height: '100%',
+      width: '660px',
+      position: { right: '0px', top: '2px', bottom: '0px' },
+      data: { ...item },
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.recipeService.updateRecipe(res).then((data) => console.log(data));
+      }
+    });
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  onDelete(item: Recipe) {
+    this.recipeService.deleteRecipe(item.id)
   }
+
+
 }

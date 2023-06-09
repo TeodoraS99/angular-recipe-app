@@ -77,6 +77,7 @@ import { RecipeService } from './services/recipe.service';
     MatFormFieldModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatIconModule
   ],
   providers: [
     RecipeService,

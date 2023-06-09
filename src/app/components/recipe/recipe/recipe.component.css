@@ -1,29 +1,8 @@
-.mat-card {
-  max-width: 400px;
+mat-card {
+  border: 1px rgba(153, 144, 144, 0.856) solid;
 }
 
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
-}
-
-.example-button-row {
-  display: table-cell;
-  max-width: 600px;
-}
 
 .example-button-row .mat-mdc-button-base {
-  margin: 8px 8px 8px 0;
+  margin: 16px;
 }
-
-:host {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-/* 
-.hello {
-  background-color:rgba(255,255,255,.3);
-  backdrop-filter: blur(10px);
-} */

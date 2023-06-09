@@ -1,10 +1,10 @@
 export interface Recipe {
-  id?: string;
+  id?: any;
   recipe_title?: string;
   image?:ImageData;
-  ingredients?: string;
-  preparation?: string;
+  ingredients?: any;
+  preparation?: any;
   complexity?: string;
-  preparation_time?: string;
-  baking_time?: string;
+  preparation_time?: any;
+  baking_time?: any;
 }

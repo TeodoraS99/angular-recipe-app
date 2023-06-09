@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{data.recipe_title}}</h1>
+<h1 mat-dialog-title>{{ data.recipe_title }}</h1>
 <div mat-dialog-content class="!flex flex-col p-2">
   <mat-form-field appearance="outline" class="!mt-4">
     <mat-label for="recipeTitle">Recipe title</mat-label>
@@ -7,12 +7,20 @@
 
   <mat-form-field appearance="outline">
     <mat-label for="ingredients ">Ingredients (one per line):</mat-label>
-    <textarea matInput [(ngModel)]="data.ingredients" class="h-auto min-h-[6rem] resize-y"></textarea>
+    <textarea
+      matInput
+      [(ngModel)]="data.ingredients"
+      class="h-auto min-h-[6rem] resize-y"
+    ></textarea>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label for="preparation ">Preparation:</mat-label>
-    <textarea matInput [(ngModel)]="data.preparation" class="h-auto min-h-[6rem] resize-y"></textarea>
+    <textarea
+      matInput
+      [(ngModel)]="data.preparation"
+      class="h-auto min-h-[6rem] resize-y"
+    ></textarea>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
@@ -35,14 +43,7 @@
   </mat-form-field>
 
   <div mat-dialog-actions>
-    <button
-      mat-button
-      [mat-dialog-close]="data"
-      cdkFocusInitial
-      type="submit"
-      (click)="create()"
-    >
-      Submit
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial type="submit">Submit
     </button>
     <button mat-button (click)="onNoClick()">Cancel</button>
   </div>

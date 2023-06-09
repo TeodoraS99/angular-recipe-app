@@ -3,21 +3,16 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Recipe } from '../types/recipe';
+
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
-  create(recipeObj: Recipe) {
-    throw new Error('Method not implemented.');
-  }
-  // getRecipe() {
-  //   throw new Error('Method not implemented.');
-  // }
-  private dbPath = '/recipe_title';
-  private recipes: Recipe[] = [];
+  private dbPath = '/Recipe';
   recipesRef: AngularFirestoreCollection<Recipe>;
 
   constructor(private db: AngularFirestore) {
@@ -32,23 +27,27 @@ export class RecipeService {
     return this.recipesRef.valueChanges();
   }
 
-  getRecipeById(id: string): Observable<Recipe | undefined> {
-    return this.recipesRef
-      .valueChanges()
-      .pipe(
-        map((recipes: Recipe[]) =>
-          recipes.find((recipe: Recipe) => recipe.id === id)
-        )
-      );
+  fetchRecipe() {
+    return this.db.collection('Recipe').snapshotChanges();
   }
 
   createRecipe(recipe: Recipe): any {
     return this.recipesRef.add({ ...recipe });
   }
 
-  updateRecipe(id: string, data: any): Promise<void> {
-    return this.recipesRef.doc(id).update(data);
-  }
+  // updateRecipe(id: string, data: any): Promise<void> {
+  //   return this.recipesRef.doc(id).update(data);
+  // }
+
+  // updateRecipe(recipe: Recipe) {
+  //   return this.recipesRef.collection('Recipe').doc(recipe.id).update(recipe);
+  // }
+
+  updateRecipe(recipe: Recipe): Promise<void> {
+    const recipeId = recipe.id;
+    delete recipe.id;
+    return this.recipesRef.doc(recipeId).update(recipe);
+    }
 
   deleteRecipe(id: string): Promise<void> {
     return this.recipesRef.doc(id).delete();

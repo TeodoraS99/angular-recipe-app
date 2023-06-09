@@ -5,24 +5,14 @@
     </button>
   </div>
 
-  <!-- <mat-card
-    (click)="onLoadRecipeDetail()"
-    [routerLink]="index"
-    routerLinkActive="active"
-  >
-    <mat-card-title>
-      {{ data.recipe_title }}
-    </mat-card-title>
+  <div *ngFor="let recipe of recipeList" class="max-w-sm p-4">
+    <mat-card>
+      <!-- <mat-card-content>{{ recipe.image }}</mat-card-content> -->
+      <mat-card-title> {{ recipe.recipe_title }}</mat-card-title>
+      <mat-card-content class="!line-clamp-2">{{ recipe.preparation }}</mat-card-content>
+      <mat-icon (click)="onEdit(recipe)"> edit</mat-icon>
+      <mat-icon (click)="onDelete(recipe)">delete</mat-icon>
 
-    <img
-      mat-card-sm-image
-      [src]="data.image"
-      alt="{{ data.recipe_title }}"
-      class="img-responsive"
-      style="max-height: 50px; border-radius: 7px"
-    />
-    <mat-card-content>
-      <p class="list-group-item-text">{{ data.preparation }}</p>
-    </mat-card-content>
-  </mat-card>
-</div> -->
+    </mat-card>
+  </div>
+</div>
