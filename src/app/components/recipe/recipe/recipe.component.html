@@ -1,26 +1,28 @@
 <div class="container">
   <div class="example-button-row">
-    <button mat-raised-button (click)="openDialog()">Create recipe</button>
+    <button mat-raised-button color="primary" (click)="openDialog()">
+      Create recipe
+    </button>
   </div>
 
-  <mat-card
+  <!-- <mat-card
     (click)="onLoadRecipeDetail()"
     [routerLink]="index"
     routerLinkActive="active"
   >
     <mat-card-title>
-      {{ recipe.recipe_title }}
+      {{ data.recipe_title }}
     </mat-card-title>
 
     <img
       mat-card-sm-image
-      [src]="recipe.image"
-      alt="{{ recipe.recipe_title }}"
+      [src]="data.image"
+      alt="{{ data.recipe_title }}"
       class="img-responsive"
       style="max-height: 50px; border-radius: 7px"
     />
     <mat-card-content>
-      <p class="list-group-item-text">{{ recipe.preparation }}</p>
+      <p class="list-group-item-text">{{ data.preparation }}</p>
     </mat-card-content>
   </mat-card>
-</div>
+</div> -->

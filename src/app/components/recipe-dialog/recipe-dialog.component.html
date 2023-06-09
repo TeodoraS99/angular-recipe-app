@@ -1,59 +1,49 @@
-<h2 mat-dialog-title>Create a new recipe</h2>
-<mat-dialog-content>
-    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="flex flex-col items-start">
-      <mat-form-field>
-        <mat-label for="recipeTitle">Recipe title</mat-label>
-        <input matInput formControlName="title" />
-      </mat-form-field>
+<h1 mat-dialog-title>{{data.recipe_title}}</h1>
+<div mat-dialog-content class="!flex flex-col p-2">
+  <mat-form-field appearance="outline" class="!mt-4">
+    <mat-label for="recipeTitle">Recipe title</mat-label>
+    <input matInput [(ngModel)]="data.recipe_title" />
+  </mat-form-field>
 
-      <div>
-        <button mat-stroked-button type="button" (click)='imagePicker.click()'>Pick Image</button>
-        <input type="file" (change)='onImagePicked($event)' #imagePicker>
-      </div>
-      <div class='image-preview' *ngIf="imagePreview !== '' && imagePreview">
-        <img [src]="imagePreview" [alt]="recipeForm.value.title">
-      </div>
+  <mat-form-field appearance="outline">
+    <mat-label for="ingredients ">Ingredients (one per line):</mat-label>
+    <textarea matInput [(ngModel)]="data.ingredients" class="h-auto min-h-[6rem] resize-y"></textarea>
+  </mat-form-field>
 
-      <mat-form-field>
-        <mat-label for="ingredients ">Ingredients (one per line): </mat-label>
-        <textarea matInput formControlName="ingredients"></textarea>
-      </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label for="preparation ">Preparation:</mat-label>
+    <textarea matInput [(ngModel)]="data.preparation" class="h-auto min-h-[6rem] resize-y"></textarea>
+  </mat-form-field>
 
-      <mat-form-field>
-        <mat-label for="preparation">Preparation: </mat-label>
-        <textarea matInput formControlName="preparation"></textarea>
-      </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label for="complexity">Complexity:</mat-label>
+    <mat-select [(ngModel)]="data.complexity">
+      <mat-option value="low">Low</mat-option>
+      <mat-option value="average">Average</mat-option>
+      <mat-option value="medium">Medium</mat-option>
+    </mat-select>
+  </mat-form-field>
 
-      <mat-form-field>
-        <mat-label for="complexity">Complexity:</mat-label>
-        <mat-select formControlName="complexity">
-          <mat-option value="low">Low</mat-option>
-          <mat-option value="average">Average</mat-option>
-          <mat-option value="medium">Medium</mat-option>
-        </mat-select>
-      </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label for="preparationTime">Preparation time:</mat-label>
+    <input matInput [(ngModel)]="data.preparation_time" />
+  </mat-form-field>
 
-      <mat-form-field>
-        <mat-label for="preparationTime">Preparation time: </mat-label>
-        <input matInput formControlName="preparationTime" />
-      </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label for="bakingTime">Baking time:</mat-label>
+    <input matInput [(ngModel)]="data.baking_time" />
+  </mat-form-field>
 
-      <mat-form-field>
-        <mat-label for="bakingTime">Baking time: </mat-label>
-        <input matInput formControlName="bakingTime" />
-      </mat-form-field>
-    </form>
-</mat-dialog-content>
-
-<div mat-dialog-actions>
-  <button
-    mat-button
-    cdkFocusInitial
-    type="submit"
-    (click)="create()"
-    [disabled]="recipeForm.invalid"
-  >
-    Submit
-  </button>
-  <button mat-button mat-dialog-close>Cancel</button>
+  <div mat-dialog-actions>
+    <button
+      mat-button
+      [mat-dialog-close]="data"
+      cdkFocusInitial
+      type="submit"
+      (click)="create()"
+    >
+      Submit
+    </button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+  </div>
 </div>
