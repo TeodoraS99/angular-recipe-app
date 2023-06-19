@@ -26,6 +26,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header/header.component';
 
+import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import {
   AngularFireAuth,
@@ -36,9 +37,14 @@ import {
   AngularFireDatabaseModule,
 } from '@angular/fire/compat/database';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { RecipeDialogComponent } from './components/recipe-dialog/recipe-dialog.component';
 import { RecipeComponent } from './components/recipe/recipe/recipe.component';
 import { RecipeService } from './services/recipe.service';
+import { RecipeDetailsDialogComponent } from './components/recipe-details-dialog/recipe-details-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -46,6 +52,7 @@ import { RecipeService } from './services/recipe.service';
     HeaderComponent,
     RecipeComponent,
     RecipeDialogComponent,
+    RecipeDetailsDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,9 +61,11 @@ import { RecipeService } from './services/recipe.service';
     ReactiveFormsModule,
     RouterModule,
     AppRoutingModule,
+    HttpClientModule,
 
     // provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    // provideFirestore(() => getFirestore()),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
@@ -77,7 +86,9 @@ import { RecipeService } from './services/recipe.service';
     MatFormFieldModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
+
+    FlexLayoutModule
   ],
   providers: [
     RecipeService,
