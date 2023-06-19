@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Recipe } from 'src/app/types/recipe';
 import { RecipeDialogComponent } from '../../recipe-dialog/recipe-dialog.component';
+import { RecipeDetailsDialogComponent } from '../../recipe-details-dialog/recipe-details-dialog.component';
 
 @Component({
   selector: 'app-recipe',
@@ -48,5 +49,18 @@ export class RecipeComponent implements OnInit {
 
   deleteRecipe(item: Recipe) {
     this.recipeService.deleteRecipe(item.id);
+  }
+
+  openDetailsRecipe(item: Recipe) {
+    const dialogRef = this.dialog.open(RecipeDetailsDialogComponent, {
+      height: '100%',
+      width: '660px',
+      position: { right: '0px', top: '2px', bottom: '0px' },
+      data: { ...item },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
   }
 }

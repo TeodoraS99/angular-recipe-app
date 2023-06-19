@@ -2,7 +2,19 @@ mat-card {
   border: 1px rgba(153, 144, 144, 0.856) solid;
 }
 
+mat-card-title {
+  cursor: pointer !important;
+}
 
 .example-button-row .mat-mdc-button-base {
   margin: 16px;
+}
+
+.buttons-container {
+  display: flex;
+}
+
+.mat-round-button {
+  margin-right: 8px;
+  border-radius: 50%;
 }

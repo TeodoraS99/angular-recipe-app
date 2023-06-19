@@ -2,12 +2,30 @@
   <div *ngFor="let recipe of recipeList" class="max-w-sm p-4">
     <mat-card>
       <mat-card-content>{{ recipe.image }}</mat-card-content>
-      <mat-card-title> {{ recipe.recipe_title }}</mat-card-title>
+      <mat-card-title (click)="openDetailsRecipe(recipe)">
+        {{ recipe.recipe_title }}</mat-card-title
+      >
       <mat-card-content class="!line-clamp-2">{{
         recipe.preparation
       }}</mat-card-content>
-      <mat-icon (click)="updateRecipe(recipe)"> edit</mat-icon>
-      <mat-icon (click)="deleteRecipe(recipe)">delete</mat-icon>
+
+      <div class="buttons-container">
+        <button
+          mat-icon-button
+          class="mat-round-button"
+          (click)="updateRecipe(recipe)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          class="mat-round-button"
+          (click)="deleteRecipe(recipe)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
     </mat-card>
   </div>
 </div>
