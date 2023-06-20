@@ -56,7 +56,7 @@ export class RecipeComponent implements OnInit {
       height: '100%',
       width: '660px',
       position: { right: '0px', top: '2px', bottom: '0px' },
-      data: { ...item },
+      data: item ,
     });
 
     dialogRef.afterClosed().subscribe((result) => {

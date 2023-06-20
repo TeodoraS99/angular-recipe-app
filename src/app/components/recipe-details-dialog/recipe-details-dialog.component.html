@@ -1,1 +1,14 @@
-<p>recipe-details-dialog works!</p>
+<div>
+  <mat-card>
+    <mat-card-title> {{ recipe.recipe_title }}</mat-card-title>
+    <mat-card-content>Ingredients: {{ recipe.ingredients }}</mat-card-content>
+    <mat-card-content>Preparation: {{ recipe.preparation }}</mat-card-content>
+    <mat-card-content>Complexity: {{ recipe.complexity }}</mat-card-content>
+    <mat-card-content>Preparation time: {{ recipe.preparation_time }}</mat-card-content>
+    <mat-card-content>Baking time: {{ recipe.baking_time }}</mat-card-content>
+
+    <img width="120" height="120" [src]="recipe.image">
+  </mat-card>
+</div>
+
+

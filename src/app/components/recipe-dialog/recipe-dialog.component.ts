@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { finalize } from 'rxjs';
 import { RecipeService } from 'src/app/services/recipe.service';
-import { Recipe } from 'src/app/types/recipe';
+import { FilePath, Recipe } from 'src/app/types/recipe';
 
 @Component({
   selector: 'app-recipe-dialog',
@@ -11,7 +12,7 @@ import { Recipe } from 'src/app/types/recipe';
 })
 export class RecipeDialogComponent implements OnInit {
   imagePreview!: string;
-  path: String;
+  path: FilePath;
 
   constructor(
     private angularFire: AngularFireStorage,
@@ -19,7 +20,6 @@ export class RecipeDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<RecipeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Recipe
   ) {}
-
   ngOnInit(): void {}
 
   onNoClick() {
@@ -30,8 +30,28 @@ export class RecipeDialogComponent implements OnInit {
     this.path = $event.target.files[0];
   }
 
-  uploadImage() {
-    console.log(this.path);
-    this.angularFire.upload('/files', this.path);
+  submit() {
+    const filePath = this.path.name;
+    const storageRef = this.angularFire.ref(filePath);
+    const uploadTask = this.angularFire.upload(filePath, this.path);
+
+    uploadTask
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          storageRef.getDownloadURL().subscribe((downloadURL: any) => {
+            console.log(downloadURL);
+            if (this.data?.recipe_title) {
+              this.recipeService
+                .createRecipe({
+                  ...this.data,
+                  image:downloadURL
+                })
+                .then((data: any) => console.log(data));
+            }
+          });
+        })
+      )
+      .subscribe();
   }
 }

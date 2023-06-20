@@ -1,7 +1,7 @@
 <div class="container mx-auto px-24 grid grid-cols-3 gap-4">
   <div *ngFor="let recipe of recipeList" class="max-w-sm p-4">
     <mat-card>
-      <mat-card-content>{{ recipe.image }}</mat-card-content>
+      <img mat-card-image  [src]="recipe.image" alt="Prajitura">
       <mat-card-title (click)="openDetailsRecipe(recipe)">
         {{ recipe.recipe_title }}</mat-card-title
       >

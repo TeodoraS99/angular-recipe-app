@@ -38,13 +38,5 @@ export class HeaderComponent implements OnInit {
         baking_time: '1 ora',
       },
     });
-
-    dialogRef.afterClosed().subscribe((res) => {
-      if (res?.recipe_title) {
-        this.recipeService
-          .createRecipe(res)
-          .then((data: any) => console.log(data));
-      }
-    });
   }
 }
