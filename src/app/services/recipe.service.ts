@@ -5,7 +5,6 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { Recipe } from '../types/recipe';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -17,13 +16,12 @@ export class RecipeService {
   constructor(private db: AngularFirestore) {
     this.recipesRef = db.collection(this.dbPath);
   }
+  fetchRecipe() {
+    return this.db.collection('Recipe').snapshotChanges();
+  }
 
   getRecipe(): Observable<Recipe[]> {
     return this.recipesRef.valueChanges();
-  }
-
-  fetchRecipe() {
-    return this.db.collection('Recipe').snapshotChanges();
   }
 
   createRecipe(recipe: Recipe): any {
@@ -33,7 +31,6 @@ export class RecipeService {
   updateRecipe(recipe: Recipe) {
     console.log('Update', recipe.id);
     return this.recipesRef.doc(recipe.id).update(recipe);
-
   }
 
   deleteRecipe(id: string): Promise<void> {

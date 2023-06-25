@@ -63,7 +63,6 @@ import { RecipeDetailsDialogComponent } from './components/recipe-details-dialog
     AppRoutingModule,
     HttpClientModule,
 
-    // provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
