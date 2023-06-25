@@ -1,14 +1,27 @@
-<div>
-  <mat-card>
-    <mat-card-title> {{ recipe.recipe_title }}</mat-card-title>
-    <mat-card-content>Ingredients: {{ recipe.ingredients }}</mat-card-content>
-    <mat-card-content>Preparation: {{ recipe.preparation }}</mat-card-content>
-    <mat-card-content>Complexity: {{ recipe.complexity }}</mat-card-content>
-    <mat-card-content>Preparation time: {{ recipe.preparation_time }}</mat-card-content>
-    <mat-card-content>Baking time: {{ recipe.baking_time }}</mat-card-content>
-
-    <img width="120" height="120" [src]="recipe.image">
-  </mat-card>
+<div class="flex flex-col items-center pt-8">
+  <img
+    class="w-96 h-64 object-cover mb-4"
+    [src]="recipe.image"
+    alt="Prajitura"
+  />
+  <div>
+    <h1 mat-dialog-title>{{ recipe.recipe_title }}</h1>
+    <mat-dialog-content>
+      <p class="text-justify">
+        <strong>Ingredients:</strong> {{ recipe.ingredients }}
+      </p>
+      <p class="text-justify">
+        <strong>Preparation:</strong> {{ recipe.preparation }}
+      </p>
+      <p class="text-justify">
+        <strong>Complexity:</strong> {{ recipe.complexity }}
+      </p>
+      <p class="text-justify">
+        <strong>Preparation time:</strong> {{ recipe.preparation_time }}
+      </p>
+      <p class="text-justify">
+        <strong>Baking time:</strong> {{ recipe.baking_time }}
+      </p>
+    </mat-dialog-content>
+  </div>
 </div>
-
-

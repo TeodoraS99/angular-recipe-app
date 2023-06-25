@@ -9,7 +9,8 @@ import { RecipeDialogComponent } from '../../recipe-dialog/recipe-dialog.compone
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent  {
+//variabile
   isRecipe = true;
   data!: Recipe;
   imagePreview!: string;
@@ -20,8 +21,7 @@ export class HeaderComponent implements OnInit {
     private dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {}
-
+  //metoda care deschide dialogul
   openDialog() {
     const dialogRef = this.dialog.open(RecipeDialogComponent, {
       height: '100%',
